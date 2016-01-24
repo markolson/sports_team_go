@@ -5,7 +5,10 @@ defmodule SportsTeamGo.Authenticate do
 
   def fetch(auth, repo) do
     # get a user and try to validate it
-    case find_and_validate(auth, repo) do
+    user = user_from_auth(auth, repo)
+    case find_and_validate(auth, user, repo) do
+      # if we hit an error where we can't register a User, say so
+      :must_register -> {:error, :must_register_for_ident}
       # if we can't find the user using auth info, create one
       # along with the Authorization
       :not_found -> create_from_auth(auth, repo)
@@ -14,7 +17,8 @@ defmodule SportsTeamGo.Authenticate do
     end
   end
 
-  defp find_and_validate(%Auth{provider: :identity}=auth, repo) do
+  defp find_and_validate(%Auth{provider: :identity}, nil, _), do: :must_register
+  defp find_and_validate(%Auth{provider: :identity}=auth, user, repo) do
     case repo.get_by(Authorization, uid: auth.uid, provider: "identity") do
       nil -> :not_found
       authorization ->
@@ -58,6 +62,7 @@ defmodule SportsTeamGo.Authenticate do
             |> repo.insert
     case result do
       {:ok, user} -> user
+      {:error, _} -> nil
     end
   end
 end

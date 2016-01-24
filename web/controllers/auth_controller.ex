@@ -10,7 +10,9 @@ defmodule SportsTeamGo.AuthController do
   end
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, params) do
-    result = Authenticate.fetch(auth, SportsTeamGo.Repo)
-    text conn, result
+    case Authenticate.fetch(auth, SportsTeamGo.Repo) do
+      {:error, :must_register_for_ident} -> text conn, "you must register"
+      result -> text conn, result
+    end
   end
 end

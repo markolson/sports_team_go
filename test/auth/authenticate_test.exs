@@ -76,4 +76,9 @@ defmodule SportsTeamGo.AuthenticateTest do
     Authenticate.fetch(g, Repo) # first, create the user and auth
     assert {:error, :password_mismatch} == Authenticate.fetch(i, Repo)
   end
+
+  test "returns a message if the User can't be created", %{good_ident: g} do
+    g = %{g | info: %Ueberauth.Auth.Info{ email: "mowgli@jung.le" }}
+    assert {:error, :must_register_for_ident} == Authenticate.fetch(g, Repo)
+  end
 end
