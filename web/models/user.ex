@@ -5,7 +5,7 @@ defmodule SportsTeamGo.User do
     field :name, :string
     field :email, :string
 
-    has_many :authorizations, PhoenixGuardian.Authorization
+    has_many :authorizations, SportsTeamGo.Authorization
 
     timestamps
   end
