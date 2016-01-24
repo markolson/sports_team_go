@@ -12,8 +12,6 @@ config :logger, level: :warn
 # Configure your database
 config :sports_team_go, SportsTeamGo.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
   database: "sports_team_go_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
