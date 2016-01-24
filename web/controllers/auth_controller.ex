@@ -28,4 +28,11 @@ defmodule SportsTeamGo.AuthController do
         |> redirect(to: page_path(conn, :index))
     end
   end
+
+  def logout(conn, params) do
+    conn
+    |> put_flash(:info, "Logged Out")
+    |> delete_session(:current_user)
+    |> redirect(to: page_path(conn, :index))
+  end
 end

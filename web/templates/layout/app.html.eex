@@ -7,21 +7,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hello SportsTeamGo!</title>
+    <title>Sports Team Go</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
   <body>
     <div class="container">
-      <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
-          </ul>
-        </nav>
-        <span class="logo"></span>
-      </header>
-
       <%= if Plug.Conn.get_session(@conn, :current_user)[:name] do %>
       <p class="alert alert-info" role="alert">Hello <%= Plug.Conn.get_session(@conn, :current_user)[:name] %></p>
       <% end %>
@@ -31,6 +22,13 @@
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
       </main>
+
+      <footer>
+        <%= link "Logout", to: auth_path(@conn, :logout), method: :delete, class: "btn btn-danger" %>
+      </footer>
+      <footer>
+        <%= link "Login", to: auth_path(@conn, :login, "identity"), method: :get, class: "btn btn-info" %>
+      </footer>
 
     </div> <!-- /container -->
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
