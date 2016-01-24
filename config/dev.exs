@@ -35,8 +35,6 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :sports_team_go, SportsTeamGo.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
   database: "sports_team_go_dev",
   hostname: "localhost",
   pool_size: 10
