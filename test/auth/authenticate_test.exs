@@ -17,19 +17,24 @@ defmodule SportsTeamGo.AuthenticateTest do
       }
     }
 
-    good_ident_auth_info = %{auth_info |
+    good_ident = %{auth_info |
       provider: :identity,
       credentials: %Ueberauth.Auth.Credentials{
         other: %{ password: "Swing", password_confirmation: "Swing" }
       }
     }
 
+    invalid_ident = %{auth_info |
+      provider: :identity,
+      credentials: %Ueberauth.Auth.Credentials{ other: %{ password: "Slide" } }
+    }
+
     {:ok, %{
-      good_ident: good_ident_auth_info
+      base_ident: auth_info,
+      invalid_ident: invalid_ident,
+      good_ident: good_ident
     }}
   end
-
-
 
   test "creates a User/Auth if none exist", %{good_ident: g} do
     assert 0 == count_for(User), "User table is not blank"
@@ -57,5 +62,18 @@ defmodule SportsTeamGo.AuthenticateTest do
     assert 1 == count_for(SportsTeamGo.Authorization), "Auth table is blank"
 
     assert user.id == auth.user_id
+  end
+
+  test "authenticates identity users", %{good_ident: g} do
+    Authenticate.fetch(g, Repo) # first, create the user and auth
+
+    # with the user created, try to authenticate
+    auth = Authenticate.fetch(g, Repo)
+    assert auth.uid == "mowgli@jung.le"
+  end
+
+  test "fails with invalid authentication", %{good_ident: g, invalid_ident: i} do
+    Authenticate.fetch(g, Repo) # first, create the user and auth
+    assert {:error, :password_mismatch} == Authenticate.fetch(i, Repo)
   end
 end

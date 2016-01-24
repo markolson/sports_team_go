@@ -9,7 +9,7 @@ defmodule SportsTeamGo.Authenticate do
       # if we can't find the user using auth info, create one
       # along with the Authorization
       :not_found -> create_from_auth(auth, repo)
-      _ -> true
+      auth -> auth
     end
   end
 
@@ -17,7 +17,11 @@ defmodule SportsTeamGo.Authenticate do
     case repo.get_by(Authorization, uid: auth.uid, provider: "identity") do
       nil -> :not_found
       authorization ->
-        IO.inspect auth.credentials.other.password
+        if Comeonin.Bcrypt.checkpw(auth.credentials.other.password, authorization.token) do
+          authorization
+        else
+          {:error, :password_mismatch}
+        end
     end
   end
 
