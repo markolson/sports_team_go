@@ -68,8 +68,8 @@ defmodule SportsTeamGo.AuthenticateTest do
     Authenticate.fetch(g, Repo) # first, create the user and auth
 
     # with the user created, try to authenticate
-    auth = Authenticate.fetch(g, Repo)
-    assert auth.uid == "mowgli@jung.le"
+    {:ok, user} = Authenticate.fetch(g, Repo)
+    assert user.email == "mowgli@jung.le"
   end
 
   test "fails with invalid authentication", %{good_ident: g, invalid_ident: i} do
