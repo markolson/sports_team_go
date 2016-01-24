@@ -9,7 +9,8 @@ defmodule SportsTeamGo.Authenticate do
       # if we can't find the user using auth info, create one
       # along with the Authorization
       :not_found -> create_from_auth(auth, repo)
-      auth -> auth
+      # pass through anything else
+      other_result -> other_result
     end
   end
 

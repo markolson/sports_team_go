@@ -17,6 +17,15 @@ defmodule SportsTeamGo.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    delete "/logout", AuthController, :logout
+  end
+
+  scope "/auth", SportsTeamGo do
+    pipe_through :browser
+
+    get "/:identity", AuthController, :login
+    get "/:identity/callback", AuthController, :callback
+    post "/:identity/callback", AuthController, :callback
   end
 
   # Other scopes may use custom stacks.
