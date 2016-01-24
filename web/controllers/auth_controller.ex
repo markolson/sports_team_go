@@ -22,9 +22,8 @@ defmodule SportsTeamGo.AuthController do
         |> put_flash(:error, msg)
         |> render "login.html"
       {:ok, user} ->
-        user_dict = %{id: user.id, name: user.name}
         conn
-        |> put_session(:current_user, user_dict)
+        |> Guardian.Plug.sign_in(user)
         |> redirect(to: page_path(conn, :index))
     end
   end
@@ -32,7 +31,7 @@ defmodule SportsTeamGo.AuthController do
   def logout(conn, params) do
     conn
     |> put_flash(:info, "Logged Out")
-    |> delete_session(:current_user)
+    |> Guardian.Plug.sign_out
     |> redirect(to: page_path(conn, :index))
   end
 end

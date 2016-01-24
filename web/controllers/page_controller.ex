@@ -1,11 +1,12 @@
 defmodule SportsTeamGo.PageController do
   use SportsTeamGo.Web, :controller
+  use Guardian.Phoenix.Controller
 
-  def index(conn, _params) do
-    if Plug.Conn.get_session(conn, :current_user)[:name] do
-      render conn, "index.html"
+  def index(conn, params, user, claims) do
+    if Guardian.Plug.current_token(conn) do
+      render conn, "index.html", current_user: user
     else
-      render conn, "index.html"
+      redirect(conn, to: auth_path(conn, :login, "identity"))
     end
   end
 end

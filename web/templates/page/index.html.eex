@@ -1,1 +1,1 @@
-Ok let's add some content..
+Ok let's add some content, <%= @current_user.name %>

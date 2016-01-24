@@ -32,3 +32,14 @@ config :ueberauth, Ueberauth,
   providers: [
     identity: {Ueberauth.Strategy.Identity, [callback_methods: ["POST"]]}
   ]
+
+config :guardian, Guardian,
+  issuer: "SportsTeamGo.#{Mix.env}",
+  ttl: {30, :days},
+  verify_issuer: true,
+  serializer: SportsTeamGo.GuardianSerializer,
+  secret_key: to_string(Mix.env),
+  hooks: SportsTeamGo.GuardianHooks
+
+config :guardian_db, GuardianDb,
+       repo: SportsTeamGo.Repo

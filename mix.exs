@@ -39,7 +39,9 @@ defmodule SportsTeamGo.Mixfile do
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
      {:ueberauth_identity, "~> 0.2"},
-     {:comeonin, "~> 2.0"}]
+     {:comeonin, "~> 2.0"},
+     {:guardian, "~> 0.9.0"},
+     {:guardian_db, "0.4.0"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
