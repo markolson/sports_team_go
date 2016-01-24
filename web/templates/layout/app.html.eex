@@ -22,6 +22,9 @@
         <span class="logo"></span>
       </header>
 
+      <%= if Plug.Conn.get_session(@conn, :current_user)[:name] do %>
+      <p class="alert alert-info" role="alert">Hello <%= Plug.Conn.get_session(@conn, :current_user)[:name] %></p>
+      <% end %>
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 

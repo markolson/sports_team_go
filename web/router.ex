@@ -17,6 +17,7 @@ defmodule SportsTeamGo.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    resources "/users", UserController
     delete "/logout", AuthController, :logout
   end
 

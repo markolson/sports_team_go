@@ -13,7 +13,8 @@ defmodule SportsTeamGo.Authenticate do
       # along with the Authorization
       :not_found -> create_from_auth(auth, repo)
       # pass through anything else
-      other_result -> other_result
+      {:error, msg} -> {:error, msg}
+      authorization -> {:ok, repo.one(Ecto.Model.assoc(authorization, :user))}
     end
   end
 
