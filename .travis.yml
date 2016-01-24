@@ -1,0 +1,22 @@
+sudo: false
+language: elixir
+elixir:
+  - 1.2.1
+  - 1.2.0
+  - 1.1.0
+otp_release:
+  - 18.0
+env:
+  - MIX_ENV=test
+script:
+  - mix test
+notifications:
+  email:
+    - theothermarkolson@gmail.com
+addons:
+  postgresql: "9.4"
+services:
+  - postgresql
+
+before_script:
+  - psql -c 'create database sports_team_go_test;' -U postgres
