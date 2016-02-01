@@ -1,18 +1,15 @@
-defmodule SportsTeamGo.User do
+defmodule SportsTeamGo.TeamMember do
   use SportsTeamGo.Web, :model
 
-  schema "users" do
-    field :name, :string
-    field :email, :string
+  schema "team_members" do
+    field :accepted, :boolean, default: false
+    belongs_to :team, SportsTeamGo.Team
+    belongs_to :user, SportsTeamGo.User
 
-    has_many :authorizations, SportsTeamGo.Authorization
-
-    has_many :team_members, SportsTeamGo.TeamMember
-    has_many :teams, through: [:team_members, :team]
     timestamps
   end
 
-  @required_fields ~w(name email)
+  @required_fields ~w(accepted)
   @optional_fields ~w()
 
   @doc """
@@ -24,6 +21,5 @@ defmodule SportsTeamGo.User do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> validate_format(:email, ~r/@/)
   end
 end

@@ -4,7 +4,8 @@ defmodule SportsTeamGo.PageController do
 
   def index(conn, params, user, claims) do
     if Guardian.Plug.current_token(conn) do
-      render conn, "index.html", current_user: user
+      teams = SportsTeamGo.Repo.preload(user, :teams)
+      render conn, "index.html", current_user: user, teams: teams
     else
       redirect(conn, to: auth_path(conn, :login, "identity"))
     end
