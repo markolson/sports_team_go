@@ -17,3 +17,10 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
   * Docs: http://hexdocs.pm/phoenix
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
+
+
+### Queries
+
+Repo.all from t in Team, preload: [:home_games]
+a = Repo.all from g in Game, preload: [:home_team, :away_team]
+IO.puts "#{a.away_team.name} @ #{a.home_team.name}. #{a.start} - #{a.end}"

@@ -4,8 +4,10 @@ defmodule SportsTeamGo.Game do
   schema "games" do
     field :start, Ecto.DateTime
     field :end, Ecto.DateTime
-    belongs_to :home, SportsTeamGo.Team
-    belongs_to :away, SportsTeamGo.Team
+    field :home_id, Ecto.UUID
+    field :away_id, Ecto.UUID
+    belongs_to :home_team, SportsTeamGo.Team, foreign_key: :home_id, define_field: false, type: Ecto.UUID
+    belongs_to :away_team, SportsTeamGo.Team, foreign_key: :away_id, define_field: false, type: Ecto.UUID
 
     timestamps
   end
