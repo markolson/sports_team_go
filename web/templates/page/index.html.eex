@@ -1,1 +1,8 @@
 Ok let's add some content, <%= @current_user.name %>
+
+<hr>
+<%= for team <- @teams do %>
+  <b><%= team.name %></b>
+<% end %>
+
+<hr>
