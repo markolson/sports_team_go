@@ -24,3 +24,13 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
 Repo.all from t in Team, preload: [:home_games]
 a = Repo.all from g in Game, preload: [:home_team, :away_team]
 IO.puts "#{a.away_team.name} @ #{a.home_team.name}. #{a.start} - #{a.end}"
+
+
+changeset = TeamMember.changeset(%TeamMember{}, %{})
+{status, changeset} = SportsTeamGo.Repo.insert(changeset)
+
+#does not work
+TeamMember.changeset(%TeamMember{}, %{team: team, user: user}) |> Repo.insert
+
+# works
+TeamMember.changeset(%TeamMember{}, %{team_id: team.id, user_id: user.id}) |> Repo.insert
