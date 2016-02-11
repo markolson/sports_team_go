@@ -3,7 +3,7 @@ defmodule SportsTeamGo.TeamMemberTest do
 
   alias SportsTeamGo.TeamMember
 
-  @valid_attrs %{accepted: true}
+  @valid_attrs %{accepted: true, team_id: "123", user_id: "456"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

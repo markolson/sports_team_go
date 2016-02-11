@@ -9,7 +9,7 @@ defmodule SportsTeamGo.TeamMember do
     timestamps
   end
 
-  @required_fields ~w(accepted)
+  @required_fields ~w(accepted user_id team_id)
   @optional_fields ~w()
 
   @doc """
