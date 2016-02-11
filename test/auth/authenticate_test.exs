@@ -56,10 +56,12 @@ defmodule SportsTeamGo.AuthenticateTest do
     assert 1 == count_for(User), "User table is blank"
     assert 0 == count_for(Authorization), "Auth table is not blank"
 
-    auth = Authenticate.fetch(g, Repo)
+    {:ok, user} = Authenticate.fetch(g, Repo)
 
     assert 1 == count_for(User), "User table has the wrong number of entries"
     assert 1 == count_for(SportsTeamGo.Authorization), "Auth table is blank"
+
+    auth = Repo.one(Authorization)
 
     assert user.id == auth.user_id
   end
