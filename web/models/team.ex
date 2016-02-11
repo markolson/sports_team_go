@@ -6,8 +6,6 @@ defmodule SportsTeamGo.Team do
 
     has_many :team_members, SportsTeamGo.TeamMember
     has_many :members, through: [:team_members, :user]
-    has_many :home_games, SportsTeamGo.Game, foreign_key: :home_id
-    has_many :away_games, SportsTeamGo.Game, foreign_key: :away_id
     timestamps
   end
 
