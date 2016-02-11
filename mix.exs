@@ -41,7 +41,9 @@ defmodule SportsTeamGo.Mixfile do
      {:ueberauth_identity, "~> 0.2"},
      {:comeonin, "~> 2.0"},
      {:guardian, "~> 0.9.0"},
-     {:guardian_db, "0.4.0"}]
+     {:guardian_db, "0.4.0"},
+     {:mix_test_watch, "~> 0.2", only: :dev}
+   ]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
