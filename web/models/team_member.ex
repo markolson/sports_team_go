@@ -2,15 +2,15 @@ defmodule SportsTeamGo.TeamMember do
   use SportsTeamGo.Web, :model
 
   schema "team_members" do
-    field :accepted, :boolean, default: false
+    field :accepted, :boolean, default: nil
     belongs_to :team, SportsTeamGo.Team
     belongs_to :user, SportsTeamGo.User
 
     timestamps
   end
 
-  @required_fields ~w(accepted user_id team_id)
-  @optional_fields ~w()
+  @required_fields ~w(user_id team_id)
+  @optional_fields ~w(accepted)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

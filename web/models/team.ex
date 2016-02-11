@@ -22,4 +22,8 @@ defmodule SportsTeamGo.Team do
     model
     |> cast(params, @required_fields, @optional_fields)
   end
+
+  def add_game(team, game, description) do
+
+  end
 end

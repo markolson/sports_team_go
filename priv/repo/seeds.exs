@@ -1,11 +1,10 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     SportsTeamGo.Repo.insert!(%SportsTeamGo.SomeModel{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+alias SportsTeamGo.Team
+alias SportsTeamGo.User
+alias SportsTeamGo.Repo
+
+user = User.changeset(%User{}, %{name: "Mark Olson", email: "theothermarkolson@gmail.com"}) |> Repo.insert!
+team_1 = Team.changeset(%Team{}, %{name: "Bad News Bears"}) |> Repo.insert!
+team_2 = Team.changeset(%Team{}, %{name: "Freezer Burn"}) |> Repo.insert!
+
+User.register_on_team(user, team_1)
+User.register_on_team(user, team_2)
