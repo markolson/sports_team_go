@@ -26,9 +26,8 @@
 
       <footer>
         <%= link "Logout", to: auth_path(@conn, :logout), method: :delete, class: "btn btn-danger" %>
-      </footer>
-      <footer>
         <%= link "Login", to: auth_path(@conn, :login, "identity"), method: :get, class: "btn btn-info" %>
+        <%= link "Register", to: user_path(@conn, :new), method: :get, class: "btn btn-info" %>
       </footer>
 
     </div> <!-- /container -->

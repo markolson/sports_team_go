@@ -11,7 +11,7 @@ defmodule SportsTeamGo.Authenticate do
       :must_register -> {:error, :must_register_for_ident}
       # if we can't find the user using auth info, create one
       # along with the Authorization
-      :not_found -> create_from_auth(auth, repo)
+      :not_found -> {:ok, create_from_auth(auth, repo)}
       # pass through anything else
       {:error, msg} -> {:error, msg}
       authorization -> {:ok, repo.one(Ecto.Model.assoc(authorization, :user))}
@@ -40,7 +40,7 @@ defmodule SportsTeamGo.Authenticate do
       %{ provider: "identity", uid: auth.info.email, token: pass }
     ) |> repo.insert
     case result do
-      {:ok, auth} -> auth
+      {:ok, auth} -> user
     end
   end
 
@@ -63,6 +63,8 @@ defmodule SportsTeamGo.Authenticate do
             |> repo.insert
     case result do
       {:ok, user} -> user
+      # this bubbles out to a :must_register, which just displays
+      # User not found. We should attach the changeset errors? I guess?
       {:error, _} -> nil
     end
   end

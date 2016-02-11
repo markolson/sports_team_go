@@ -5,10 +5,8 @@ defmodule SportsTeamGo.GuardianHooks do
   # lol lol lol
   def after_sign_in(conn, location) do
     GuardianDb.after_sign_in(conn, location)
-    IO.inspect conn
-    IO.inspect location
     user = Guardian.Plug.current_resource(conn, location)
-    IO.puts("SIGNED INTO LOCATION WITH: #{user.email}")
+    IO.puts("SIGNED INTO LOCATION #{inspect location} WITH: #{user.email}")
     conn
   end
 
