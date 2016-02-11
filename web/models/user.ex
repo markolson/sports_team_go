@@ -1,6 +1,9 @@
 defmodule SportsTeamGo.User do
   use SportsTeamGo.Web, :model
   import Ecto.Query
+  alias SportsTeamGo.Team
+  alias SportsTeamGo.TeamMember
+  alias SportsTeamGo.Repo
 
   schema "users" do
     field :name, :string
@@ -8,7 +11,7 @@ defmodule SportsTeamGo.User do
 
     has_many :authorizations, SportsTeamGo.Authorization
 
-    has_many :team_members, SportsTeamGo.TeamMember
+    has_many :team_members, TeamMember
     has_many :teams, through: [:team_members, :team]
     timestamps
   end
@@ -29,20 +32,21 @@ defmodule SportsTeamGo.User do
   end
 
   def register_on_team(model, team) do
-    alias SportsTeamGo.TeamMember
     TeamMember.changeset(%TeamMember{}, %{user_id: model.id, team_id: team.id})
-    |> SportsTeamGo.Repo.insert
+    |> Repo.insert
   end
 
   def accept_team(model, team) do
      membership = Repo.one(from tm in TeamMember, where: [user_id: ^model.id, team_id: ^team.id])
+     # TODO: fail if there's no membership
      TeamMember.changeset(membership, %{accepted: true}) |> Repo.update
   end
 
   def accepted_teams(model) do
-    SportsTeamGo.Team
-    |> join(:inner, [t], m in SportsTeamGo.TeamMember, t.id == m.team_id)
+    Team
+    |> join(:inner, [t], m in TeamMember, t.id == m.team_id)
     |> where([t, m], m.accepted == true)
-    |> SportsTeamGo.Repo.all
+    |> where([t, m], m.user_id == ^model.id)
+    |> Repo.all
   end
 end
