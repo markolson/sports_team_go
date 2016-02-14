@@ -32,14 +32,15 @@ defmodule SportsTeamGo.User do
   end
 
   def register_on_team(model, team) do
-    TeamMember.changeset(%TeamMember{}, %{user_id: model.id, team_id: team.id})
+    %TeamMember{}
+    |> TeamMember.changeset(%{user_id: model.id, team_id: team.id})
     |> Repo.insert
   end
 
   def accept_team(model, team) do
      membership = Repo.one(from tm in TeamMember, where: [user_id: ^model.id, team_id: ^team.id])
      # TODO: fail if there's no membership
-     TeamMember.changeset(membership, %{accepted: true}) |> Repo.update
+     membership |> TeamMember.changeset(%{accepted: true}) |> Repo.update
   end
 
   def accepted_teams(model) do

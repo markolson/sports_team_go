@@ -31,18 +31,23 @@ defmodule SportsTeamGo.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.1.2"},
+    [
+     # built-ins
+     {:phoenix, "~> 1.1.2"},
      {:phoenix_ecto, "~> 2.0"},
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 2.3"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
+     # auth
      {:ueberauth_identity, "~> 0.2"},
      {:comeonin, "~> 2.0"},
      {:guardian, "~> 0.9.0"},
      {:guardian_db, "0.4.0"},
-     {:mix_test_watch, "~> 0.2", only: :dev}
+     # test/code support
+     {:mix_test_watch, "~> 0.2", only: :dev},
+     {:credo, "~> 0.3", only: [:dev, :test]}
    ]
   end
 

@@ -19,7 +19,7 @@ defmodule SportsTeamGo.Authenticate do
   end
 
   defp find_and_validate(%Auth{provider: :identity}, nil, _), do: :must_register
-  defp find_and_validate(%Auth{provider: :identity}=auth, user, repo) do
+  defp find_and_validate(%Auth{provider: :identity} = auth, user, repo) do
     case repo.get_by(Authorization, uid: auth.uid, provider: "identity") do
       nil -> :not_found
       authorization ->
@@ -32,13 +32,13 @@ defmodule SportsTeamGo.Authenticate do
   end
 
   # Create an Identity Authoriztion for a User
-  defp create_from_auth(%Auth{provider: :identity}=auth, repo) do
+  defp create_from_auth(%Auth{provider: :identity} = auth, repo) do
     user = user_from_auth(auth, repo)
     pass = Comeonin.Bcrypt.hashpwsalt(auth.credentials.other.password)
     authorization = Ecto.Model.build(user, :authorizations)
-    result = Authorization.changeset(authorization,
-      %{ provider: "identity", uid: auth.info.email, token: pass }
-    ) |> repo.insert
+    result = authorization
+      |> Authorization.changeset(%{provider: "identity", uid: auth.info.email, token: pass})
+      |> repo.insert
     case result do
       {:ok, auth} -> user
     end
@@ -58,9 +58,10 @@ defmodule SportsTeamGo.Authenticate do
   end
 
   # build and insert the User
-  defp create_user(%{name: name, email: email}=auth, repo) do
-    result = User.changeset(%User{}, %{name: name, email: email})
-            |> repo.insert
+  defp create_user(%{name: name, email: email} = auth, repo) do
+    result = %User{}
+     |> User.changeset(%{name: name, email: email})
+     |> repo.insert
     case result do
       {:ok, user} -> user
       # this bubbles out to a :must_register, which just displays
