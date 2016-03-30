@@ -3,7 +3,7 @@ defmodule SportsTeamGo.AuthorizationTest do
 
   alias SportsTeamGo.Authorization
 
-  @valid_attrs %{user_id: Ecto.UUID.generate, expires_at: 42, password: "some content", password_confirmation: "some content", provider: "some content", refresh_token: "some content", token: "some content", uid: "some content"}
+  @valid_attrs %{user_id: 12, expires_at: 42, password: "some content", password_confirmation: "some content", provider: "some content", refresh_token: "some content", token: "some content", uid: "some content"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

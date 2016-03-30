@@ -24,8 +24,8 @@ defmodule SportsTeamGo.Web do
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
 
-      @primary_key {:id, :binary_id, autogenerate: true}
-      @foreign_key_type :binary_id
+      @primary_key {:id, :id, autogenerate: true}
+      @foreign_key_type :integer
     end
   end
 

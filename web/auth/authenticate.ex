@@ -19,7 +19,7 @@ defmodule SportsTeamGo.Authenticate do
   end
 
   defp find_and_validate(%Auth{provider: :identity}, nil, _), do: :must_register
-  defp find_and_validate(%Auth{provider: :identity} = auth, user, repo) do
+  defp find_and_validate(%Auth{provider: :identity} = auth, _user, repo) do
     case repo.get_by(Authorization, uid: auth.uid, provider: "identity") do
       nil -> :not_found
       authorization ->
@@ -40,7 +40,7 @@ defmodule SportsTeamGo.Authenticate do
       |> Authorization.changeset(%{provider: "identity", uid: auth.info.email, token: pass})
       |> repo.insert
     case result do
-      {:ok, auth} -> user
+      {:ok, _} -> user
     end
   end
 
@@ -58,7 +58,7 @@ defmodule SportsTeamGo.Authenticate do
   end
 
   # build and insert the User
-  defp create_user(%{name: name, email: email} = auth, repo) do
+  defp create_user(%Ueberauth.Auth.Info{name: name, email: email}, repo) do
     result = %User{}
      |> User.changeset(%{name: name, email: email})
      |> repo.insert

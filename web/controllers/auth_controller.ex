@@ -9,7 +9,7 @@ defmodule SportsTeamGo.AuthController do
     render conn, "login.html"
   end
 
-  def callback(%{assigns: %{ueberauth_auth: auth}} = conn, params) do
+  def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     case Authenticate.fetch(auth, SportsTeamGo.Repo) do
       # information leak, but, whatever. easy to treat like a normal
       # failure later.
@@ -20,7 +20,7 @@ defmodule SportsTeamGo.AuthController do
       {:error, msg} ->
         conn
         |> put_flash(:error, msg)
-        |> render "login.html"
+        |> render("login.html")
       {:ok, user} ->
         conn
         |> Guardian.Plug.sign_in(user)
@@ -28,7 +28,7 @@ defmodule SportsTeamGo.AuthController do
     end
   end
 
-  def logout(conn, params) do
+  def logout(conn, _params) do
     conn
     |> put_flash(:info, "Logged Out")
     |> Guardian.Plug.sign_out

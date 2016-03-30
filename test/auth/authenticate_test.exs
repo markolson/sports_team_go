@@ -51,7 +51,7 @@ defmodule SportsTeamGo.AuthenticateTest do
   end
 
   test "creates an Auth if a user exists", %{good_ident: g} do
-    {:ok, user} = User.changeset(%User{}, %{name: "Mowgli", email: "mowgli@jung.le"}) |> Repo.insert
+    {:ok, _} = User.changeset(%User{}, %{name: "Mowgli", email: "mowgli@jung.le"}) |> Repo.insert
 
     assert 1 == count_for(User), "User table is blank"
     assert 0 == count_for(Authorization), "Auth table is not blank"
