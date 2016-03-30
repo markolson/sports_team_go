@@ -29,7 +29,7 @@ config :phoenix, :generators,
 
 config :ueberauth, Ueberauth,
   providers: [
-    identity: {Ueberauth.Strategy.Identity, [callback_methods: ["POST"]]}
+    identity: {Ueberauth.Strategy.Identity, [scrub_params: false, callback_methods: ["POST"]]}
   ]
 
 config :guardian, Guardian,
