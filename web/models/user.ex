@@ -31,18 +31,6 @@ defmodule SportsTeamGo.User do
     |> validate_format(:email, ~r/@/)
   end
 
-  def register_on_team(model, team) do
-    %TeamMember{}
-    |> TeamMember.changeset(%{user_id: model.id, team_id: team.id})
-    |> Repo.insert
-  end
-
-  def accept_team(model, team) do
-     membership = Repo.one(from tm in TeamMember, where: [user_id: ^model.id, team_id: ^team.id])
-     # TODO: fail if there's no membership
-     membership |> TeamMember.changeset(%{accepted: true}) |> Repo.update
-  end
-
   def accepted_teams(model) do
     Team
     |> join(:inner, [t], m in TeamMember, t.id == m.team_id)
