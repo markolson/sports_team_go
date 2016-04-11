@@ -23,6 +23,7 @@ defmodule SportsTeamGo.Router do
 
     get "/", PageController, :index
     resources "/users", UserController
+    resources "/teams", TeamController
     delete "/logout", AuthController, :logout
   end
 
